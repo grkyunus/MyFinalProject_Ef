@@ -1,8 +1,10 @@
 ﻿using Business.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using System;
 
-
+//SOLID
+// Open Closed Principle
 namespace ConsoleUI
 {
     internal class Program
@@ -10,7 +12,7 @@ namespace ConsoleUI
         private static void Main(string[] args)
         {
 
-            ProductManager productManager = new ProductManager(new InMemoryProductDal());
+            ProductManager productManager = new ProductManager(new EfProductDal());
 
             foreach (var product in productManager.GetAll())
             {

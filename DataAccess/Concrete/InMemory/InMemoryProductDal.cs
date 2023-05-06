@@ -3,6 +3,7 @@ using Entities.Concrete;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -66,6 +67,23 @@ namespace DataAccess.Concrete.InMemory
         {
             return _products.Where(p => p.CategoryId == categoryId).ToList();
 
+        }
+
+        // Get sayesinde buna gerek yoktur
+        //public List<Product> GetAllCategory(int categoryId)
+        //{
+        //    return _products.Where(p => p.CategoryId == categoryId).ToList();
+
+        //}
+
+        public List<Product> GetAll(Expression<Func<Product, bool>> filter = null)
+        {
+            return _products;
+        }
+
+        public Product Get(Expression<Func<Product, bool>> filter)
+        {
+            throw new NotImplementedException();
         }
     }
 }
