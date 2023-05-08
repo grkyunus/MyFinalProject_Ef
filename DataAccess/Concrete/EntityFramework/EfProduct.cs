@@ -27,6 +27,7 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (NorthwindContext context = new NorthwindContext())
             {
+                
                 var deletedEntity = context.Entry(entity);
                 deletedEntity.State = EntityState.Deleted;
                 context.SaveChanges();
@@ -55,6 +56,15 @@ namespace DataAccess.Concrete.EntityFramework
         {
             using (NorthwindContext context = new NorthwindContext())
             {
+                //var UpdatedEntity = context.Products.SingleOrDefault(p => p.ProductId == entity.ProductId);
+                //UpdatedEntity.ProductName = entity.ProductName;
+                //UpdatedEntity.CategoryId = entity.CategoryId;
+                //UpdatedEntity.UnitPrice = entity.UnitPrice;
+                //UpdatedEntity.UnitsInStock = entity.UnitsInStock;
+                //UpdatedEntity.UnitsInStock = entity.UnitsInStock;
+                //context.SaveChanges();
+
+                // Yukarıdaki kod bir linq örneği iken ve tek tek güncellerken alt taraftaki ise EntityFramework yöntemidir ve oda uygun şekilde göncelleme yapar.
                 var updatedEntity = context.Entry(entity);
                 updatedEntity.State = EntityState.Modified;
                 context.SaveChanges();
