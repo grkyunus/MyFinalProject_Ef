@@ -13,7 +13,7 @@ namespace DataAccess.Abstract
     // product ile ilgili veri tabanında yapacağım operasyonları içeren interface kendisi.
     public interface IProductDal : IEntityRepository<Product>
     {
-
+        // Buraya Özel İşlemler gerçekleştirilir.
     }
 }
 
