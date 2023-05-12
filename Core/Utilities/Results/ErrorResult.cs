@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Results
 {
+    // işlem hatalı olduğunda aktif hale gelir.
     public class ErrorResult : Result
     {
         public ErrorResult(string message) : base(false, message)

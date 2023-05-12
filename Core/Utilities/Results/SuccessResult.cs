@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Results
 {
+    // işlem doğrulandığında aktif hale gelir.
     public class SuccessResult : Result
     {
         public SuccessResult(string message) : base(true, message)

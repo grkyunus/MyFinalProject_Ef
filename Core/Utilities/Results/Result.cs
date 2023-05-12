@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 // Utilities = Araçlar demektir.
 namespace Core.Utilities.Results
 {
+    // Void sistemler için oluşturuldu.
     public class Result : IResult
     {
         public Result(bool success, string message) : this(success)
