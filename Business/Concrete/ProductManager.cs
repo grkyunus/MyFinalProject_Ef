@@ -15,6 +15,8 @@ namespace Business.Concrete
 {
     public class ProductManager : IProductService
     {
+        // Dependency chain -- bağımlılık var. alt tarafta yapılan eklemede bağımlılık kopuyor.
+        // alt taraftaki durum Loosely coupled denir. az bağımlılık durumu. isimlendirilir.
         IProductDal _productDal;
 
         public ProductManager(IProductDal productDal)
@@ -38,10 +40,10 @@ namespace Business.Concrete
         {
             //İş kodları
             // sorgunun amacı saat 22 olduğunda bakıma alındığı ya da servis dışı olduğunu belirtmek için.
-            if (DateTime.Now.Hour ==22)
-            {
-                return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
-            }
+            //if (DateTime.Now.Hour == 10)
+            //{
+            //    return new ErrorDataResult<List<Product>>(Messages.MaintenanceTime);
+            //}
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(),Messages.ProductListed);
         }
 

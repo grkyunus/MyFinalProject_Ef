@@ -1,6 +1,18 @@
+using Business.Abstract;
+using Business.Concrete;
+using DataAccess.Abstract;
+using DataAccess.Concrete.EntityFramework;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+// farklý yapýlara taþýnabilir alt yapýlaný yapýyor 
+// Autofac,Ninject,CastleWindsor, StroctoreMap, LinghtInject, DryInject --> IoC Container bu yapý üzerine kullanýlabilir.
+// AOP
+builder.Services.AddControllers();
+builder.Services.AddSingleton<IProductService,ProductManager>();
+builder.Services.AddSingleton<IProductDal, EfProductDal>();
+
 builder.Services.AddRazorPages();
 
 
@@ -24,5 +36,7 @@ app.UseRouting();
 app.UseAuthorization();
 
 app.MapRazorPages();
+
+app.MapControllers();
 
 app.Run();
