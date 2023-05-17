@@ -1,13 +1,19 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Validation;
+using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using Entities.DTOs;
+using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,14 +30,28 @@ namespace Business.Concrete
             _productDal = productDal;
         }
 
+        [ValidationAspect(typeof(ProductValidator))]
         public IResult Add(Product product)
         {
             // business codes
-            if (product.ProductName.Length<2)
-            {
-                //magic strings 
-                return new ErrorResult(Messages.ProductNameInvalid);
-            }
+            // yukarıdaki ve aşşağıdaki farklı işlemlerdir.
+            // validation 
+            // bu kısımda kurallar ProductValidator.cs bulunması gerekmektedir ve oradadır.
+            // alt taraftaki kod bloğu buraya yazmak yerine | ValidationTool.cs yazmak daha uygundur bu sayede kod tekrarından kurtuluruz.
+
+            //var context = new ValidationContext<Product>(product);
+            //ProductValidator productValidator = new ProductValidator();
+            //var result = productValidator.Validate(context);
+            //if (!result.IsValid)
+            //{
+            //    // throw new ValidationException(result.Errors);  // hoca bu şekilde yazdı ancak alt tarafa çevirmek zorunda kaldım.
+            //    throw new FluentValidation.ValidationException(result.Errors);
+            //}
+
+            // ValidationTool.Validate(new ProductValidator(), product); // bu kod yukarıdaki [***] sayesinde gerek duyulmuyor.
+
+
+
             _productDal.Add(product);
             return new SuccessResult(Messages.ProductAdded);
         }
