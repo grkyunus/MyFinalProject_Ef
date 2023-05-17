@@ -34,3 +34,5 @@ namespace Core.Aspects.Autofac.Validation
         }
     }
 }
+
+// Engin hoca 13.gün videosunda yaklaşık olarak dk 0:50 civarında bu kodları anlatıyor.
