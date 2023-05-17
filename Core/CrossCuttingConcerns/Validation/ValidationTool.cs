@@ -18,7 +18,7 @@ namespace Core.CrossCuttingConcerns.Validation
             var result = validator.Validate(context);
             if (!result.IsValid)
             {
-                throw new ValidationException(result.Errors);  // hoca bu şekilde yazdı ancak alt tarafa çevirmek zorunda kaldım
+                throw new ValidationException(result.Errors);
             }
         }
 
