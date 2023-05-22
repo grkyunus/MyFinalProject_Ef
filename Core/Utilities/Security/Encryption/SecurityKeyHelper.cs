@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Utilities.Security.Encryption
 {
-    // Wep api appsetings içerisindeki uykudurlan "SecurityKey" onu byte array haline getiriyor ve symmetricSecurity şekline çeviriyor.
+    // Wep api appsetings içerisindeki uydudurlan "SecurityKey" onu byte array haline getiriyor ve symmetricSecurity şekline çeviriyor.
     public class SecurityKeyHelper
     {
         public static SecurityKey CreateSecurityKey(string securityKey)
