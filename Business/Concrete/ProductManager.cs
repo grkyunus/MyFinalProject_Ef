@@ -87,6 +87,7 @@ namespace Business.Concrete
 
         }
 
+        [CacheAspect] // inmemoriycache || key,value
         public IDataResult<List<Product>> GetAll()
         {
             //İş kodları
@@ -131,7 +132,7 @@ namespace Business.Concrete
         {
             // Select count(*) from products where categoryId = 1 || alt taraftaki kod bunu arka planda oluşturur ve çalıştırır.
             var result = _productDal.GetAll(p => p.CategoryId == categoryId).Count;
-            if (result >= 10)
+            if (result >= 20)
             {
                 return new ErrorResult(Messages.ProductCountOfCategoryError);
             }

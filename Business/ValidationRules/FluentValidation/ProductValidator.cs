@@ -14,7 +14,7 @@ namespace Business.ValidationRules.FluentValidation
         public ProductValidator()
         {
             RuleFor(p => p.ProductName).NotEmpty();
-            RuleFor(p => p.ProductName).MaximumLength(2);
+            RuleFor(p => p.ProductName).MaximumLength(10);
             RuleFor(p => p.UnitPrice).NotEmpty();
             RuleFor(p => p.UnitPrice).GreaterThan(0);
             RuleFor(p => p.UnitPrice).GreaterThanOrEqualTo(10).When(p => p.CategoryId == 1); // bu kısımda categoryıd 1 olan ürünler en az fiyat 10 olmalıdır kuralı koyuluyor.

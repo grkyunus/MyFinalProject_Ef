@@ -34,6 +34,7 @@ builder.Services.AddControllers();
 // builder.Services.AddHttpContextAccessor();
 
 
+
 var tokenOptions = builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -1,6 +1,7 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using System;
 
 //SOLID

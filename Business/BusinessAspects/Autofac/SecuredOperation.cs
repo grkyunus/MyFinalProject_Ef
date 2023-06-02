@@ -17,7 +17,7 @@ namespace Business.BusinessAspects.Autofac
     public class SecuredOperation : MethodInterception
     {
         private string[] _roles;
-        private IHttpContextAccessor _httpContextAccessor;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public SecuredOperation(string roles)
         {
@@ -37,7 +37,7 @@ namespace Business.BusinessAspects.Autofac
                     return;
                 }
             }
-            throw new Exception(Messages.AuthorizationDenied);
+            throw new Exception(Messages.AuthorizationDenied); // yetkiniz yok hatası alınıyor.
         }
     }
 }
