@@ -3,6 +3,8 @@ using Business.BusinessAspects.Autofac;
 using Business.CCS;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspects.Autofac.Caching;
+using Core.Aspects.Autofac.Transaction;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
 using Core.Utilities.Business;
@@ -38,6 +40,7 @@ namespace Business.Concrete
 
         [SecuredOperation("product.add,admin")]
         [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")] // "Get" tüm cache siler ancak || "IProductService.Get" sayesinde sadece product.get hepsini siler.
         public IResult Add(Product product)
         {
             #region bilgi ve eski kodlar
@@ -104,6 +107,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Product>>(_productDal.GetAll(p => p.CategoryId == id));
         }
 
+        [CacheAspect]
         public IDataResult<Product> GetById(int productId)
         {
             return new SuccessDataResult<Product>(_productDal.Get(p => p.ProductId == productId));
@@ -120,6 +124,7 @@ namespace Business.Concrete
         }
 
         [ValidationAspect(typeof(ProductValidator))]
+        [CacheRemoveAspect("IProductService.Get")]
         public IResult Update(Product product)
         {
             _productDal.Update(product);
@@ -161,6 +166,17 @@ namespace Business.Concrete
             return new SuccessResult();
         }
 
-
+        [TransactionScopeAspect]
+        public IResult AddTransactionalTest(Product product)
+            // bu kod satırının amacı olduda ürünü alamadığında kullanıcı ödeme için gönderdiği parayı geri iade işlemi içindir örneğin. || Detaylı araştırma yapılmalı 
+        {
+            Add(product);
+            if (product.UnitPrice<10)
+            {
+                throw new Exception("");
+            }
+            Add(product);
+            return null;
+        }
     }
 }

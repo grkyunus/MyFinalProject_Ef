@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -47,8 +48,25 @@ namespace Core.CrossCuttingConcerns.Caching.Microsoft
 
         public void RemoveByPattern(string pattern)
         {
-            var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
-            var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(_memoryCache) as dynamic;
+            //var cacheEntriesCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance);
+            //var cacheEntriesCollection = cacheEntriesCollectionDefinition.GetValue(_memoryCache) as dynamic;
+            
+            // Normalde hoca yukarıdaki 2 satırı kullandı ancak 6 sürümünde hata alındı ve alt taraftaki kod satırı eklendiğinde sorunsuz çalıştı 
+            // Core not eğer eklenmedi ise eklemeli ve iki kod arasındaki temel fark karşılaştırmak için not almayı unutma!!!
+
+            dynamic cacheEntriesCollection = null;
+            var cacheEntriesFieldCollectionDefinition = typeof(MemoryCache).GetField("_coherentState", BindingFlags.NonPublic | BindingFlags.Instance);
+            var caacheEntriesPropetyCollectionDefinition = typeof(MemoryCache).GetProperty("EntriesCollection", BindingFlags.NonPublic | BindingFlags.Instance);
+            if (cacheEntriesFieldCollectionDefinition != null)
+            {
+                var coherentStateValueCollection = cacheEntriesFieldCollectionDefinition.GetValue(_memoryCache);
+                var entriesCollectionValueCollection = coherentStateValueCollection.GetType().GetProperty
+                    (
+                        "EntriesCollection", BindingFlags.NonPublic | BindingFlags.Instance
+                    );
+                cacheEntriesCollection = entriesCollectionValueCollection.GetValue(coherentStateValueCollection)!;
+            }
+            // ****************
             List<ICacheEntry> cacheCollectionValues = new List<ICacheEntry>();
 
             foreach (var cacheItem in cacheEntriesCollection)
