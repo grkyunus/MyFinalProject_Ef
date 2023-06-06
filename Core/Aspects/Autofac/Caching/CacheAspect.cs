@@ -27,7 +27,7 @@ namespace Core.Aspects.Autofac.Caching
             //invocation(metot) || ReflectedType.FullName ( namespace ismini alır.) || Method.Name (metot ismini alır.)
             //Northwind.Business.IProductService.GetAll();
             var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
-            var arguments = invocation.Arguments.ToList(); // Metodun parametlerini listeye çevir.
+            var arguments = invocation.Arguments.ToList(); // Metodun parametrelerini listeye çevir.
             var key = $"{methodName}({string.Join(",", arguments.Select(x => x?.ToString() ?? "<Null>"))})"; // varsa parametleri ekler yoksa null atar. || join işlemi ile her parametre arasına "," eklemek için. 
             if (_cacheManager.IsAdd(key))// cache olup olmadığını kontrol eder.
             {
@@ -35,7 +35,7 @@ namespace Core.Aspects.Autofac.Caching
                 return;
             }
             invocation.Proceed(); // Eğer yoksa çalış veri tabanından veriyi getir.
-            _cacheManager.add(key, invocation.ReturnValue, _duration); // ve burda cache veri eklenmiş olur.
+            _cacheManager.Add(key, invocation.ReturnValue, _duration); // ve burda cache veri eklenmiş olur.
         }
     }
 }
